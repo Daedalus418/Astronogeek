@@ -1,0 +1,32 @@
+<section class='form-page'>
+  <div>
+    <h1>Créer un compte</h1>
+      
+    <div class='row'>
+      <div class='col-sm-12'>
+        <%= form_for @user do |f| %>
+          <%= render 'layouts/errors', object: @user %>
+          <div class='form-group'>
+            <%= f.text_field :username, class: 'form-control', required: true, placeholder: 'Nom/pseudo' %>
+          </div>
+
+          <div class='form-group'>
+            <%= f.email_field :email, class: 'form-control', required: true, placeholder: 'Email', autofocus: true %>
+          </div>
+          <br>
+          <div class='form-group'>
+            <%= f.password_field :password, class: 'form-control', required: true, placeholder: 'Mot de passe', autocomplete: 'off' %>
+          </div>
+          <br>
+          <div class='form-group'>
+            <%= f.password_field :password_confirmation, class: 'form-control', required: true, placeholder: 'Confirmation mot de passe', autocomplete: 'off' %>
+          </div>
+          <br>
+          <div class='actions text-center'>
+            <%= f.submit 'Inscription', class: 'btn btn-default' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

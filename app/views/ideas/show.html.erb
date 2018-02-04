@@ -1,0 +1,58 @@
+<section class='idea-thread'>
+  <header>
+    <h3><%= @idea.title %></h3>
+
+    <% if @idea.description? %>
+      <p><%= @idea.description %></p>
+    <% end %>
+  </header>
+
+  <% if logged_in? %>
+    <h3>Commentaire</h3>
+    <div class='add-comment row'>
+      <div class='col-sm-6'>
+        <%= form_for :comment, url: idea_comments_path(@idea) do |f| %>
+          <div class='form-group'>
+            <%= f.text_area :body, class: 'form-control', placeholder: 'The quick brown fox...', rows: 10, required: true %>
+          </div>
+
+          <div class='form-group'>
+            <%= f.button 'Ajouter un commentaire', class: 'btn btn-default' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="all-comments row">
+    <div class="col-sm-12">
+      <% if @comments.present? %>
+        <h3>Réactions</h3>
+      <% end %>
+      
+      <% @comments.each do |comment| %>
+        <div class="comment">
+          <p class="comment-owner">
+            <strong><%= comment.user.username %></strong>
+
+            <span class="comment-created small">
+              <%= time_ago_in_words(comment.created_at) %> ago
+            </span>
+
+            <% if logged_in? && current_user.owns_comment?(comment) %>
+              <span class="edit-comment">
+                <%= link_to 'edit',  edit_idea_comment_path(@idea, comment) %>
+              </span>
+
+              <span class="delete-comment">
+                <%= link_to 'delete', idea_comment_path(@idea, comment), method: :delete, data: { confirm: 'Êtes-vous sûr ?' } %>
+              </span>
+            <% end %>
+          </p>
+
+          <p><%= comment.body %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

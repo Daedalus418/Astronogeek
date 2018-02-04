@@ -1,0 +1,35 @@
+<section class='row'>
+  <div class='col-xs-12'>
+    <h1>Listing des idées</h1>
+  </div>
+
+  <div class='col-xs-12'>
+    <div class="table-responsive">
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Créateur</th>
+            <th>Commentaires</th>
+            <th>Votes</th>
+            <th>J'aime</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @ideas.each do |idea| %>
+            <tr>
+              <td><%= idea.title %></td>
+              <td><%= truncate(idea.description, :length => 50) %></td>
+              <td><%= idea.user.username %></td>
+              <td><%= link_to pluralize(idea.comment_count, 'commentaire'), idea %></td>
+              <td><%= pluralize(idea.points, 'point') %></td>
+              <td><%= link_to "voter (#{idea.upvotes})", upvote_idea_path(idea), method: :post %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
